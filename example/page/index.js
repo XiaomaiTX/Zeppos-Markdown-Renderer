@@ -3,29 +3,32 @@ import { getText } from "@zos/i18n";
 import { setPageBrightTime } from "@zos/display";
 
 import * as STYLE from "zosLoader:./index.[pf].layout.js";
-import { ZMarkdown } from "../utils/ZMarkdown";
+import { ZMarkdown } from "../libs/ZMarkdown";
 
 Page({
-	onInit() {
-		console.log("onInit");
-		if (
-			setPageBrightTime({
-				brightTime: 60000,
-			}) === 0
-		) {
-			console.log("setPageBrightTime success");
-		}
-	},
-	build() {
-		const markdown_text = ZMarkdown.createWidget(hmUI.widget.TEXT, {
-			...STYLE.MARKDOWN_TEXT,
-			text: `# Zeppos-Markdown-Renderer
+    onInit() {
+        console.log("onInit");
+        if (
+            setPageBrightTime({
+                brightTime: 60000,
+            }) === 0
+        ) {
+            console.log("setPageBrightTime success");
+        }
+    },
+    build() {
+        const markdown_text = ZMarkdown.createWidget(hmUI.widget.TEXT, {
+            ...STYLE.MARKDOWN_TEXT,
+            text: `# Zeppos-Markdown-Renderer
 # 一级标题
 ## 二级标题
 ### 三级标题
 #### 四级标题
 ##### 五级标题
 ###### 六级标题
+----------------
+普通文本测试
+
 ----------------
 *斜体文本* 或 _1_
 **粗体文本** 或 __粗体文本__
@@ -34,9 +37,6 @@ Page({
 - 项目1
 - 项目2
   - 子项目1
-* 项目1
-* 项目2
-  * 子项目1
 + 项目1
 + 项目2
   + 子项目1
@@ -54,9 +54,20 @@ Page({
 ----------------
 ***
 ___
+\`1\` 2\`3\`4\`5\`6\`7\`
+\`\`\`shell
+code block
+fuckyou
+\`\`\`
+\`\`\`shell
+code block
+fuckyou
+\`\`\`
+
+----------------
 
 
 `,
-		});
-	},
+        });
+    },
 });
