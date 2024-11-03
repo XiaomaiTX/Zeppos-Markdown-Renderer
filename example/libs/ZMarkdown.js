@@ -25,7 +25,6 @@ export class ZMarkdown {
                 }
             },
         };
-        console.log("init layout:", JSON.stringify(this.layout));
 
         this.style = style;
         this.originText = style.text;
@@ -39,62 +38,62 @@ export class ZMarkdown {
                 name: "headings",
                 pattern: /^(#{1,6})\s+(.*)$/gm,
                 replace: (match, p1, p2) => {
-                    const level = p1.length; // 计算标题级别
-                    return `<H${level}>${p2.trim()}</H${level}>`; // 保留标题文本
+                    const level = p1.length; 
+                    return `<H${level}>${p2.trim()}</H${level}>`; 
                 },
             },
             {
                 name: "horizontalRule",
                 pattern: /^\s*([-*_])\1{2,}\s*$/gm,
                 replace: (match) =>
-                    `<HorizontalRules>${match.trim()}</HorizontalRules>`, // 保留水平线原样
+                    `<HorizontalRules>${match.trim()}</HorizontalRules>`, 
             },
             {
                 name: "links",
                 pattern: /\[(.*?)\]\((.*?)\)/g,
-                replace: (match, p1, p2) => `<Links>[${p1}](${p2})</Links>`, // 保留链接文本
+                replace: (match, p1, p2) => `<Links>[${p1}](${p2})</Links>`, 
             },
             {
                 name: "boldItalic",
                 pattern: /(?:\*\*\*([^*]+)\*\*\*|___([^_]+)___)/g,
                 replace: (match, p1, p2) =>
-                    `<BoldItalic>${p1 ? p1.trim() : p2.trim()}</BoldItalic>`, // 保留粗斜体文本
+                    `<BoldItalic>${p1 ? p1.trim() : p2.trim()}</BoldItalic>`, 
             },
             {
                 name: "bold",
                 pattern: /(?:\*\*([^*]+)\*\*|__([^_]+)__)/g,
                 replace: (match, p1, p2) =>
-                    `<Bold>${p1 ? p1.trim() : p2.trim()}</Bold>`, // 保留粗体文本
+                    `<Bold>${p1 ? p1.trim() : p2.trim()}</Bold>`, 
             },
             {
                 name: "italic",
                 pattern: /(?:\*([^*]+)\*|_([^_]+)_)/g,
                 replace: (match, p1, p2) =>
-                    `<Italic>${p1 ? p1.trim() : p2.trim()}</Italic>`, // 保留斜体文本
+                    `<Italic>${p1 ? p1.trim() : p2.trim()}</Italic>`, 
             },
             {
                 name: "blockquotes",
                 pattern: /^(>+)\s*(.*)$/gm,
                 replace: (match, p1, p2) =>
-                    `<BlockQuotes>${p1} ${p2.trim()}</BlockQuotes>`, // 保留引用文本
+                    `<BlockQuotes>${p1} ${p2.trim()}</BlockQuotes>`, 
             },
             {
                 name: "unorderedList",
                 pattern: /^(\s*)([*+\-])\s+(.*)$/gm,
                 replace: (match, p1, p2, p3) =>
-                    `<UnorderedLists>${p1}${p2} ${p3.trim()}</UnorderedLists>`, // 保留无序列表文本
+                    `<UnorderedLists>${p1}${p2} ${p3.trim()}</UnorderedLists>`, 
             },
             {
                 name: "orderedList",
                 pattern: /^(\s*)(\d+)\.\s+(.*)$/gm,
                 replace: (match, p1, p2, p3) =>
-                    `<OrderedLists>${p1}${p2}. ${p3.trim()}</OrderedLists>`, // 保留有序列表文本
+                    `<OrderedLists>${p1}${p2}. ${p3.trim()}</OrderedLists>`, 
             },
             {
                 name: "codeBlock",
                 pattern: /```([^`]*?)```/gs,
                 replace: (match, p1) => {
-                    // 将代码块内容中的所有换行符替换为 \n
+                    
                     const formattedContent = p1.replace(/\r?\n/g, "\\n");
                     return `<CodeBlock>${formattedContent.trim()}</CodeBlock>`;
                 },
@@ -102,7 +101,7 @@ export class ZMarkdown {
             {
                 name: "inlineCode",
                 pattern: /`([^`]+)`/g,
-                replace: (match, p1) => `<InlineCode>${p1.trim()}</InlineCode>`, // 保留行内代码文本
+                replace: (match, p1) => `<InlineCode>${p1.trim()}</InlineCode>`, 
             },
         ];
 
@@ -110,16 +109,16 @@ export class ZMarkdown {
             originText = originText.replace(pattern, replace);
         });
 
-        // originText = originText.replace(
-        //     /(^|<\/[^>]+>)([^<]+)(?=<|$)/g,
-        //     (match, p1, p2) => {
-        //         const trimmedText = p2.trim();
-        //         if (trimmedText) {
-        //             return `${p1}<Text>${trimmedText}</Text>`;
-        //         }
-        //         return match;
-        //     }
-        // );
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         return originText;
     }
     static renderMarkedText(markedText) {
@@ -128,7 +127,6 @@ export class ZMarkdown {
             ZMarkdown.layout.offset.x = 0;
 
             const lineText = lines[i];
-            console.log(`lineText: ${lineText}`);
 
             const { width, height } = hmUI.getTextLayout(lineText, {
                 text_size: ZMarkdown.style.text_size,
@@ -151,7 +149,6 @@ export class ZMarkdown {
 
                 const tagType = match[2];
                 const content = match[3];
-                console.log(`tagType: ${tagType}, content: ${content}`);
                 result.push({ tagType: tagType, content: content });
 
                 lastIndex = regex.lastIndex;
@@ -256,11 +253,11 @@ export class ZMarkdown {
                 let text = "";
                 let url = "";
                 if (match) {
-                    text = match[1]; // 链接文本
-                    url = match[2]; // URL
-                    console.log(`链接文本: ${text}, URL: ${url}`);
+                    text = match[1]; 
+                    url = match[2]; 
                 } else {
-                    console.log("没有找到链接.");
+					text = "URL not found";
+					url = "";
                 }
                 QRCode_Style = this.Style.QRCode;
 
@@ -300,7 +297,6 @@ export class ZMarkdown {
 
                         hmUI.deleteWidget(QRCode);
                     });
-                    console.log(url);
                 });
                 ZMarkdown.layout.offset.x += width;
                 ZMarkdown.layout.previous_h = height;
@@ -426,11 +422,11 @@ export class ZMarkdown {
                 let quoteContent = "";
 
                 if (match) {
-                    level = match[1].length; // 引用的层级，由 > 的数量决定
-                    quoteContent = match[2]; // 引用的内容
-                    console.log(`引用层级: ${level}, 内容: ${quoteContent}`);
+                    level = match[1].length; 
+                    quoteContent = match[2]; 
                 } else {
-                    console.log("没有找到引用.");
+					level = 0;
+					quoteContent = "BlockQuotes error";
                 }
                 const { width, height } = hmUI.getTextLayout(text, {
                     text_size: ZMarkdown.style.text_size || DEFAULT_TEXT_SIZE,
@@ -494,14 +490,13 @@ export class ZMarkdown {
                 const matches = content.matchAll(/^(\s*)([*+\-])\s+(.*)$/gm);
                 for (const match of matches) {
                     [fullMatch, indent, symbol, text] = match;
-                    // const indent = match[1]; // 获取缩进部分
-                    // const symbol = match[2]; // 项目符号
-                    // const text = match[3].trim(); // 项目内容，去掉前后的空白
+                    
+                    
+                    
 
-                    // 计算层级，假设每两个空格表示一个层级
+                    
                 }
                 const level = indent.length / 2;
-                console.log("level:", level, "text:", text);
                 const { width, height } = hmUI.getTextLayout(text, {
                     text_size: ZMarkdown.style.text_size || DEFAULT_TEXT_SIZE,
                     text_width: ZMarkdown.layout.w,
@@ -614,7 +609,6 @@ export class ZMarkdown {
                 content = content.replace(/\\n/g, "\n");
                 code_type = content.slice(0, content.indexOf("\n"));
                 code_content = content.slice(content.indexOf("\n") + 1);
-                console.log(code_type, code_content);
                 const { width: code_type_width, height: code_type_height } =
                     hmUI.getTextLayout(code_type, {
                         text_size:
@@ -628,12 +622,6 @@ export class ZMarkdown {
                     text_size: ZMarkdown.style.text_size || DEFAULT_TEXT_SIZE,
                     text_width: ZMarkdown.layout.w,
                 });
-                console.log(
-                    code_type_width,
-                    code_type_height,
-                    code_content_width,
-                    code_content_height
-                );
                 hmUI.createWidget(hmUI.widget.FILL_RECT, {
                     x: ZMarkdown.layout.x + ZMarkdown.layout.offset.x,
                     y: ZMarkdown.layout.y + ZMarkdown.layout.offset.y,
